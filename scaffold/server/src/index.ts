@@ -5,7 +5,10 @@ import { ensureIndexes, getDb } from './db.js';
 import { getRedis } from './redis.js';
 import { webhooksRouter } from './routes/webhooks.js';
 import { graderRouter } from './routes/grader.js';
+import { authRouter } from './routes/auth.js';
+import { apiRouter } from './routes/api.js';
 import { startOutboxWorker } from './worker/outbox.js';
+import { attachWebSocketServer } from './ws.js';
 
 const app = express();
 
@@ -24,9 +27,12 @@ app.get('/healthz', async (_req, res) => {
 app.use('/webhooks', webhooksRouter);
 
 app.use(express.json());
+app.use('/auth', authRouter);
+app.use('/api', apiRouter);
 app.use('/__grader', graderRouter);
 
 const server = createServer(app);
+attachWebSocketServer(server);
 
 async function main() {
   await ensureIndexes();

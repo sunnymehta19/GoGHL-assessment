@@ -22,5 +22,9 @@
     "scaffold:server": "npm --prefix scaffold/server run dev",
     "scaffold:web": "npm --prefix scaffold/web run dev",
     "start:server": "npm --prefix scaffold/server start"
+  },
+  "dependencies": {
+    "@types/ws": "^8.18.2",
+    "ws": "^8.23.0"
   }
 }
